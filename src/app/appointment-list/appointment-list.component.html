@@ -1,0 +1,53 @@
+<h2>Citas</h2>
+
+
+
+<ng-template #noAppointments>
+  <p>No hay citas disponibles.</p>
+</ng-template>
+
+<!-- New Appointment Form -->
+<h2>Nueva Cita</h2>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>Título:</label>
+    <input type="text" [(ngModel)]="newAppointment.title" name="title" required>
+  </div>
+  <div>
+    <label>Fecha:</label>
+    <input type="date" [(ngModel)]="newAppointment.date" name="date" required>
+  </div>
+  <div>
+    <label>Horario:</label>
+    <input type="text" [(ngModel)]="newAppointment.time" name="time" required>
+  </div>
+  <div>
+    <label>Nombre Cliente:</label>
+    <input type="text" [(ngModel)]="newAppointment.clientName" name="clientName" required>
+  </div>
+  <div>
+    <label>Doctor Responsable:</label>
+    <input type="text" [(ngModel)]="newAppointment.responsibleDoctor" name="responsibleDoctor" required>
+  </div>
+  <div class="btn-cont">
+    <button type="submit" [disabled]="!newAppointment && !selectedAppointment">Guardar</button>
+    <button class="delete-button"  type="button" *ngIf="selectedAppointment" (click)="cancelEdit()">Cancelar</button>
+  </div>
+</form>
+<!-- Appointment List -->
+<div *ngIf="appointments.length > 0; else noAppointments">
+  <ul>
+      <li *ngFor="let appointment of appointments; let i = index">
+        <span>{{ appointment.title }}</span>
+        <span>{{ appointment.date }}</span>
+        <span>{{ appointment.time }}</span>
+        <span>{{ appointment.clientName }}</span>
+        <span>{{ appointment.responsibleDoctor }}</span>
+        <div class="btn-cont">
+          <button class="update-button" (click)="editAppointment(i)">Update</button>
+          <button class="delete-button" (click)="deleteAppointment(i)">Delete</button>
+        </div>
+      </li>
+    </ul>
+</div>
+<router-outlet></router-outlet>
